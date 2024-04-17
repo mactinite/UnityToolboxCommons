@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:Label tabindex="-1" text="State Machine" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
+    <ui:Label tabindex="-1" text="Current State" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Current_State" focusable="false" style="-unity-text-align: middle-left; font-size: 18px; height: 60px; background-color: rgba(0, 0, 0, 0.29); color: rgb(255, 255, 255); -unity-font-style: bold; padding-right: 16px; padding-left: 16px;" />
+    <ui:ListView name="Blackboard" />
+    <ui:Foldout text="Default Inspector" name="Default_Inspector" />
+</ui:UXML>

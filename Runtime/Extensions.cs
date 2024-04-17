@@ -117,7 +117,7 @@ namespace mactinite.ToolboxCommons
  
             public DistanceComparer(Transform source)
             {
-                source = source;
+                _source = source;
             }
  
             public int Compare(Collider2D a, Collider2D b)

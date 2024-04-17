@@ -7,17 +7,17 @@ namespace mactinite.ToolboxCommons
     [System.Serializable]
     public class GenericDictionary
     {
-        private Dictionary<string, object> headers;
+        private Dictionary<string, object> _headers;
 
         public GenericDictionary()
         {
-            headers = new Dictionary<string, object>();
+            _headers = new Dictionary<string, object>();
         }
 
         public bool TryGetValue<T>(string dataID, out T data) where T : struct
         {
             data = default(T);
-            if (headers.TryGetValue(dataID, out object headerValue))
+            if (_headers.TryGetValue(dataID, out object headerValue))
             {
                 data = (T)headerValue;
                 return true;
@@ -28,7 +28,7 @@ namespace mactinite.ToolboxCommons
         public T? GetHeaderValue<T>(string header) where T : struct
         {
             object headerValue = null;
-            if (headers.TryGetValue(header, out headerValue))
+            if (_headers.TryGetValue(header, out headerValue))
             {
                 return (T)headerValue;
             }
@@ -39,7 +39,7 @@ namespace mactinite.ToolboxCommons
         public object GetHeaderValue(string header)
         {
             object headerValue = null;
-            if (headers.TryGetValue(header, out headerValue))
+            if (_headers.TryGetValue(header, out headerValue))
             {
                 return headerValue;
             }
@@ -49,13 +49,13 @@ namespace mactinite.ToolboxCommons
 
         public void SetHeaderValue(string header, object value)
         {
-            if (headers.ContainsValue(header))
+            if (_headers.ContainsValue(header))
             {
-                headers[header] = value;
+                _headers[header] = value;
             }
             else
             {
-                headers.Add(header, value);
+                _headers.Add(header, value);
             }
         }
     }

@@ -1,25 +1,50 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace mactinite.ToolboxCommons.StateMachine {
-    public abstract class State<T> where T : StateMachine<T> {
-        private T stateMachine;
+namespace mactinite.ToolboxCommons.StateMachine
+{
+    public abstract class State
+    {
+        private List<StateTransition> _transitions;
 
-        public T StateMachine { get => stateMachine; set => stateMachine = value; }
-
-        public State (T stateMachine) {
-            StateMachine = stateMachine;
+        protected State()
+        {
+            _transitions = new List<StateTransition>();
         }
 
-        public State () { }
-
-        public virtual IEnumerator Start () {
-            yield break;
+        public virtual void OnEnter(Blackboard _blackboard)
+        {
         }
-        
-        public virtual IEnumerator End () {
-            yield break;
+
+        public virtual void OnUpdate(Blackboard _blackboard)
+        {
+        }
+
+        public virtual void OnExit(Blackboard _blackboard)
+        {
+        }
+
+        public bool EvaluateTransitions(out string destination)
+        {
+            destination = "";
+            for (int i = 0; i < _transitions.Count; i++)
+            {
+                if (_transitions[i].Evaluate())
+                {
+                    destination = _transitions[i].Destination;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public State AddTransition(string to, Func<bool> eval)
+        {
+            _transitions.Add(new StateTransition(to, eval));
+            return this;
         }
     }
 }
