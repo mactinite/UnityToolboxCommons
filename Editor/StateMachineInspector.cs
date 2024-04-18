@@ -22,14 +22,15 @@ namespace mactinite.ToolboxCommons.StateMachine.Editor
             VisualElement myInspector = new VisualElement();
             uxml.CloneTree(myInspector);
 
+            Label currStateLabel = myInspector.Q<Label>("Current_State");
+            currStateLabel.text = $"Current State:";
 
             sm.OnStateChange += delegate(string s)
             {
                 Label currStateLabel = myInspector.Q<Label>("Current_State");
-                currStateLabel.text = s;
+                currStateLabel.text = $"Current State: {s}";
             };
-            
-            
+
             VisualElement InspectorFoldout = myInspector.Q("Default_Inspector");
             
             // Attach a default Inspector to the Foldout.

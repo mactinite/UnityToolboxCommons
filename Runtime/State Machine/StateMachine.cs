@@ -1,20 +1,19 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using UnityEngine;
 
 namespace mactinite.ToolboxCommons.StateMachine
 {
     public abstract class StateMachine : MonoBehaviour
     {
-        public Blackboard _blackboard = new Blackboard();
 
         private string _currentStateKey = null;
         private State _currentState = null;
         private Dictionary<string, State> states = new Dictionary<string, State>();
         public string CurrentStateName => _currentStateKey;
         public event Action<string> OnStateChange;
+
+        public abstract Blackboard Blackboard { get; }
 
         private void Awake()
         {
@@ -37,7 +36,7 @@ namespace mactinite.ToolboxCommons.StateMachine
             }
 
             // Run the update on the current state.
-            _currentState.OnUpdate(_blackboard);
+            _currentState.OnUpdate(Blackboard);
             
             // evaluate transitions and move to next state.
             if (_currentState.EvaluateTransitions(out var destination))
@@ -50,11 +49,11 @@ namespace mactinite.ToolboxCommons.StateMachine
         {
             // process the exit event of the last state
             if (_currentState != null)
-                _currentState.OnExit(_blackboard);
+                _currentState.OnExit(Blackboard);
 
             // update and start the enter event of the new state
             _currentState = state;
-            _currentState.OnEnter(_blackboard);
+            _currentState.OnEnter(Blackboard);
         }
 
         public void TransitionTo(string stateName)

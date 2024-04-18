@@ -47,4 +47,38 @@ namespace mactinite.ToolboxCommons.StateMachine
             return this;
         }
     }
+
+
+    public abstract class State<T> : State where T : Blackboard
+    {
+        public virtual void OnEnter(T _blackboard)
+        {
+        }
+
+        public override void OnEnter(Blackboard _blackboard)
+        {
+            T blackboard = (T) _blackboard;
+            OnEnter(blackboard);
+        }
+
+        public virtual void OnUpdate(T _blackboard)
+        {
+        }
+        
+        public override void OnUpdate(Blackboard _blackboard)
+        {
+            T blackboard = (T) _blackboard;
+            OnUpdate(blackboard);
+        }
+
+        public virtual void OnExit(T _blackboard)
+        {
+        }
+
+        public override void OnExit(Blackboard _blackboard)
+        {
+            T blackboard = (T) _blackboard;
+            OnExit(blackboard);
+        }
+    }
 }
