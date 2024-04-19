@@ -21,6 +21,10 @@ namespace mactinite.ToolboxCommons.StateMachine
         public virtual void OnUpdate(Blackboard _blackboard)
         {
         }
+        
+        public virtual void OnFixedUpdate(Blackboard _blackboard)
+        {
+        }
 
         public virtual void OnExit(Blackboard _blackboard)
         {
@@ -69,6 +73,16 @@ namespace mactinite.ToolboxCommons.StateMachine
         {
             T blackboard = (T) _blackboard;
             OnUpdate(blackboard);
+        }
+        
+        public virtual void OnFixedUpdate(T _blackboard)
+        {
+        }
+        
+        public override void OnFixedUpdate(Blackboard _blackboard)
+        {
+            T blackboard = (T) _blackboard;
+            OnFixedUpdate(blackboard);
         }
 
         public virtual void OnExit(T _blackboard)

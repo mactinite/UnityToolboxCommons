@@ -1,7 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:Label tabindex="-1" text="State Machine" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
-    <ui:VisualElement name="Default_Inspector" style="flex-grow: 1;" />
-    <ui:Foldout text="Debug" name="Debug">
-        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Current_State" />
-    </ui:Foldout>
-</ui:UXML>

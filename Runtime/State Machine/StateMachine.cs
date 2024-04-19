@@ -1,48 +1,45 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 
 namespace mactinite.ToolboxCommons.StateMachine
 {
-    public abstract class StateMachine : MonoBehaviour
+    public class StateMachine<T> where T : Blackboard
     {
-
         private string _currentStateKey = null;
         private State _currentState = null;
         private Dictionary<string, State> states = new Dictionary<string, State>();
         public string CurrentStateName => _currentStateKey;
         public event Action<string> OnStateChange;
 
-        public abstract Blackboard Blackboard { get; }
+        public T Blackboard;
 
-        private void Awake()
+        public StateMachine(T blackboard)
         {
-
+            Blackboard = blackboard;
         }
 
-        private void Update()
+        public void Update()
         {
             if (_currentState == null) return;
 
-
-            if (OnStateChange != null)
-            {
-                Debug.Log($"Subscribers: {OnStateChange.GetInvocationList().Length}");
-
-                foreach (var invocation in OnStateChange.GetInvocationList())
-                {
-                    Debug.Log($"{invocation}");
-                }
-            }
-
             // Run the update on the current state.
             _currentState.OnUpdate(Blackboard);
-            
+
             // evaluate transitions and move to next state.
             if (_currentState.EvaluateTransitions(out var destination))
             {
                 TransitionTo(destination);
             }
+        }
+
+        public void FixedUpdate()
+        {
+            if (_currentState == null) return;
+            
+            // Run the update on the current state.
+            _currentState.OnFixedUpdate(Blackboard);
         }
 
         private void SetState(State state)
@@ -70,13 +67,13 @@ namespace mactinite.ToolboxCommons.StateMachine
                     $"Did you forget to register the state or use the wrong identifier?");
             }
         }
-        
+
         public void RegisterState(string stateName, State state)
         {
             states.Add(stateName, state);
         }
-        
-        public State RegisterState<T>(string stateName) where T: State, new()
+
+        public State RegisterState<T>(string stateName) where T : State, new()
         {
             states.Add(stateName, new T());
             return states[stateName];
